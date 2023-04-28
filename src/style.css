@@ -1,0 +1,67 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+#textarea {
+  outline: none;
+  border: 1px solid black;
+  width: 700px;
+  margin: 0 auto;
+  display: block;
+  height: 30vh;
+  max-height: 40vh;
+}
+
+.keyboard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 auto;
+  width: fit-content;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.keyboard__row {
+  display: flex;
+  column-gap: 5px;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+}
+
+.Backspace,
+.ShiftLeft {
+  width: 80px;
+}
+
+.Tab {
+  width: 50px;
+}
+
+.Delete {
+  width: 70px;
+}
+
+.CapsLock {
+  width: 55px;
+}
+
+.Enter {
+  width: 65px;
+}
+
+.ShiftRight {
+  width: 85px;
+}
+
+.Space {
+  width: 305px;
+}

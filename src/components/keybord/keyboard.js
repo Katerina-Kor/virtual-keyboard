@@ -42,7 +42,7 @@ body.addEventListener('click', keyClickHandler);
 
 function keyClickHandler(event) {
   let elem = event.target;
-  input.focus();
+  //input.focus();
   if (!elem.classList.contains('button')) return;
 
   if (elem.classList.contains('Backspace')) {
@@ -100,5 +100,6 @@ function keyClickHandler(event) {
   input.setRangeText(elem.innerText, input.selectionStart, input.selectionEnd, 'end');
 }
 
+input.addEventListener('blur', () => input.focus());
 
 export { KEYBOARD };
