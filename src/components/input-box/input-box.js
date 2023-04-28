@@ -1,4 +1,4 @@
-function createInputBox() {
+export default function createInputBox() {
   const INPUT = document.createElement('textarea');
 
   INPUT.setAttribute('id', 'textarea');
@@ -9,5 +9,3 @@ function createInputBox() {
 
   return INPUT;
 }
-
-export default { createInputBox };
