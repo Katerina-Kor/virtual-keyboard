@@ -46,6 +46,7 @@ function keyClickHandler(event) {
   if (!elem.classList.contains('button')) return;
 
   if (elem.classList.contains('Backspace')) {
+    if (input.selectionStart === 0) return;
     input.setRangeText('', input.selectionStart - 1, input.selectionEnd, 'end');
     return;
   }
