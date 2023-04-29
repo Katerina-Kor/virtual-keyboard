@@ -198,9 +198,17 @@ function buttonDownHandler(event) {
   elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
 
   if (elem.classList.contains('Backspace')) {
-    if (textarea.selectionStart === 0) return;
+    if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) return;
+    if (textarea.selectionStart === 0) {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+      return;
+    }
+    if (textarea.selectionStart === textarea.selectionEnd) {
+      textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
+    } else {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+    }
 
-    textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
     return;
   }
 
@@ -311,8 +319,17 @@ function keyDownHandler(event) {
   elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
 
   if (code === 'Backspace') {
-    if (textarea.selectionStart === 0) return;
-    textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
+    if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) return;
+    if (textarea.selectionStart === 0) {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+      return;
+    }
+    if (textarea.selectionStart === textarea.selectionEnd) {
+      textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
+    } else {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+    }
+
     return;
   }
 
