@@ -92,12 +92,80 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('ShiftLeft')) {
-    //??
+    buttons[0].innerText = '~';
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '@';
+    buttons[3].innerText = '#';
+    buttons[4].innerText = '$';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = '^';
+    buttons[7].innerText = '&';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[25].innerText = '{';
+    buttons[26].innerText = '}';
+    buttons[38].innerText = ':';
+    buttons[39].innerText = '"';
+    buttons[40].innerText = '|';
+    buttons[50].innerText = '<';
+    buttons[51].innerText = '>';
+    buttons[52].innerText = '?';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    }
     return;
   }
 
   if (elem.classList.contains('ShiftRight')) {
-    //??
+    buttons[0].innerText = '~';
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '@';
+    buttons[3].innerText = '#';
+    buttons[4].innerText = '$';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = '^';
+    buttons[7].innerText = '&';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[25].innerText = '{';
+    buttons[26].innerText = '}';
+    buttons[38].innerText = ':';
+    buttons[39].innerText = '"';
+    buttons[40].innerText = '|';
+    buttons[50].innerText = '<';
+    buttons[51].innerText = '>';
+    buttons[52].innerText = '?';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    }
     return;
   }
 
@@ -143,6 +211,45 @@ function buttonUpHandler(event) {
     return;
   } else {
     elem.classList.remove('active');
+  }
+
+  if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
+    buttons[0].innerText = '`';
+    buttons[1].innerText = '1';
+    buttons[2].innerText = '2';
+    buttons[3].innerText = '3';
+    buttons[4].innerText = '4';
+    buttons[5].innerText = '5';
+    buttons[6].innerText = '6';
+    buttons[7].innerText = '7';
+    buttons[8].innerText = '8';
+    buttons[9].innerText = '9';
+    buttons[10].innerText = '0';
+    buttons[11].innerText = '-';
+    buttons[12].innerText = '=';
+    buttons[25].innerText = '[';
+    buttons[26].innerText = ']';
+    buttons[38].innerText = ';';
+    buttons[39].innerText = '\'';
+    buttons[40].innerText = '\\';
+    buttons[50].innerText = ',';
+    buttons[51].innerText = '.';
+    buttons[52].innerText = '/';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    }
+    return;
   }
 }
 
@@ -199,12 +306,80 @@ function keyDownHandler(event) {
   }
 
   if (code == 'ShiftLeft') {
-    //??
+    buttons[0].innerText = '~';
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '@';
+    buttons[3].innerText = '#';
+    buttons[4].innerText = '$';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = '^';
+    buttons[7].innerText = '&';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[25].innerText = '{';
+    buttons[26].innerText = '}';
+    buttons[38].innerText = ':';
+    buttons[39].innerText = '"';
+    buttons[40].innerText = '|';
+    buttons[50].innerText = '<';
+    buttons[51].innerText = '>';
+    buttons[52].innerText = '?';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    }
     return;
   }
 
   if (code == 'ShiftRight') {
-    //??
+    buttons[0].innerText = '~';
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '@';
+    buttons[3].innerText = '#';
+    buttons[4].innerText = '$';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = '^';
+    buttons[7].innerText = '&';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[25].innerText = '{';
+    buttons[26].innerText = '}';
+    buttons[38].innerText = ':';
+    buttons[39].innerText = '"';
+    buttons[40].innerText = '|';
+    buttons[50].innerText = '<';
+    buttons[51].innerText = '>';
+    buttons[52].innerText = '?';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    }
     return;
   }
 
@@ -248,6 +423,45 @@ function keyUpHandler(event) {
   if (elem && elem.classList.contains('CapsLock')) {
     return;
   } else if (elem) elem.classList.remove('active');
+
+  if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
+    buttons[0].innerText = '`';
+    buttons[1].innerText = '1';
+    buttons[2].innerText = '2';
+    buttons[3].innerText = '3';
+    buttons[4].innerText = '4';
+    buttons[5].innerText = '5';
+    buttons[6].innerText = '6';
+    buttons[7].innerText = '7';
+    buttons[8].innerText = '8';
+    buttons[9].innerText = '9';
+    buttons[10].innerText = '0';
+    buttons[11].innerText = '-';
+    buttons[12].innerText = '=';
+    buttons[25].innerText = '[';
+    buttons[26].innerText = ']';
+    buttons[38].innerText = ';';
+    buttons[39].innerText = '\'';
+    buttons[40].innerText = '\\';
+    buttons[50].innerText = ',';
+    buttons[51].innerText = '.';
+    buttons[52].innerText = '/';
+
+    if (buttons[28].classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    }
+    return;
+  }
 }
 
 export { keyboard };
