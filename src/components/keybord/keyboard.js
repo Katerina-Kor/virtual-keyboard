@@ -13,6 +13,7 @@ const altLeftButton = buttons[57];
 const altRightButton = buttons[59];
 const controlLeftButton = buttons[55];
 const controlRightButton = buttons[60];
+let currentButton;
 
 function createKeyboard () {
 
@@ -193,6 +194,7 @@ body.addEventListener('keyup', keyUpHandler);
 
 function buttonDownHandler(event) {
   let elem = event.target;
+  currentButton = elem;
   if (!elem.classList.contains('button')) return;
 
   elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
@@ -295,8 +297,8 @@ function buttonDownHandler(event) {
   textarea.setRangeText(elem.innerText, textarea.selectionStart, textarea.selectionEnd, 'end');
 }
 
-function buttonUpHandler(event) {
-  let elem = event.target;
+function buttonUpHandler() {
+  let elem = currentButton;
 
   if (!elem.classList.contains('button')) return;
 
