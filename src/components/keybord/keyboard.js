@@ -1,35 +1,44 @@
 import { keysInEnglish, keysInRussian } from "../../data/keys.js";
 import { createKeyButton } from "../button/button.js";
-import { input } from "../input-box/input-box.js";
+import { textarea } from "../input-box/input-box.js";
 
-const keyboard = createWrapper('div', 'keyboard');
 let keys;
 const rows = [];
 const buttons = [];
 const body = document.body;
-
 if (!keys) keys = keysInEnglish;
+const keyboard = createKeyboard();
+const capsLockButton = buttons[28];
+const altLeftButton = buttons[57];
+const altRightButton = buttons[59];
+const controlLeftButton = buttons[55];
+const controlRightButton = buttons[60];
 
-for (let i = 0; i < 5; i++) {
-  const row = createWrapper('div', 'keyboard__row');
-  rows.push(row);
-  keyboard.append(row);
+function createKeyboard () {
+
+  let keyboard = createWrapper('div', 'keyboard');
+
+  for (let i = 0; i < 5; i++) {
+    const row = createWrapper('div', 'keyboard__row');
+    rows.push(row);
+    keyboard.append(row);
+  }
+
+  for (let key in keys) {
+    let button = createKeyButton(key);
+    buttons.push(button);
+  }
+
+  for (let i = 0; i < buttons.length; i++) {
+    if (i < 14) rows[0].append(buttons[i]);
+    if (i > 13 && i < 28) rows[1].append(buttons[i]);
+    if (i > 27 && i < 42) rows[2].append(buttons[i]);
+    if (i > 41 && i < 55) rows[3].append(buttons[i]);
+    if (i > 54) rows[4].append(buttons[i]);
+  }
+
+  return keyboard;
 }
-
-for (let key in keys) {
-  let button = createKeyButton(key);
-  button.innerText = keys[key];
-  buttons.push(button);
-}
-
-for (let i = 0; i < buttons.length; i++) {
-  if (i < 14) rows[0].append(buttons[i]);
-  if (i > 13 && i < 28) rows[1].append(buttons[i]);
-  if (i > 27 && i < 42) rows[2].append(buttons[i]);
-  if (i > 41 && i < 55) rows[3].append(buttons[i]);
-  if (i > 54) rows[4].append(buttons[i]);
-}
-
 
 function createWrapper(tagName, className) {
   const wrapper = document.createElement(tagName);
@@ -37,7 +46,170 @@ function createWrapper(tagName, className) {
   return wrapper;
 }
 
-input.addEventListener('blur', () => input.focus());
+function fillButtonsInner(...args) {
+  if (args.length === 0) {
+    let i = 0;
+    for (let key in keys) {
+      buttons[i].innerText = keys[key];
+      i++;
+    }
+    if (capsLockButton.classList.contains('active')) {
+      fillButtonsInner('CapsLock', 'up');
+    }
+  }
+
+  if (args[0] === 'CapsLock' && args[1] === 'up') {
+    buttons.forEach((button, index) => {
+      if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+        button.innerText = button.innerText.toUpperCase();
+      }
+    });
+  }
+
+  if (args[0] === 'CapsLock' && args[1] === 'down') {
+    buttons.forEach((button, index) => {
+      if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+        button.innerText = button.innerText.toLowerCase();
+      }
+    });
+  }
+
+  if (args[0] === 'Shift' && args[1] === 'up' && keys === keysInEnglish) {
+    buttons[0].innerText = '~';
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '@';
+    buttons[3].innerText = '#';
+    buttons[4].innerText = '$';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = '^';
+    buttons[7].innerText = '&';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[25].innerText = '{';
+    buttons[26].innerText = '}';
+    buttons[38].innerText = ':';
+    buttons[39].innerText = '"';
+    buttons[40].innerText = '|';
+    buttons[50].innerText = '<';
+    buttons[51].innerText = '>';
+    buttons[52].innerText = '?';
+
+    if (capsLockButton.classList.contains('active')) {
+      fillButtonsInner('CapsLock', 'down');
+    } else {
+      fillButtonsInner('CapsLock', 'up');
+    }
+  }
+
+  if (args[0] === 'Shift' && args[1] === 'up' && keys === keysInRussian) {
+    buttons[1].innerText = '!';
+    buttons[2].innerText = '"';
+    buttons[3].innerText = '№';
+    buttons[4].innerText = ';';
+    buttons[5].innerText = '%';
+    buttons[6].innerText = ':';
+    buttons[7].innerText = '?';
+    buttons[8].innerText = '*';
+    buttons[9].innerText = '(';
+    buttons[10].innerText = ')';
+    buttons[11].innerText = '_';
+    buttons[12].innerText = '+';
+    buttons[40].innerText = '/';
+    buttons[52].innerText = ',';
+
+    if (capsLockButton.classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    }
+  }
+
+  if (args[0] === 'Shift' && args[1] === 'down' && keys === keysInEnglish) {
+    buttons[0].innerText = '`';
+    buttons[1].innerText = '1';
+    buttons[2].innerText = '2';
+    buttons[3].innerText = '3';
+    buttons[4].innerText = '4';
+    buttons[5].innerText = '5';
+    buttons[6].innerText = '6';
+    buttons[7].innerText = '7';
+    buttons[8].innerText = '8';
+    buttons[9].innerText = '9';
+    buttons[10].innerText = '0';
+    buttons[11].innerText = '-';
+    buttons[12].innerText = '=';
+    buttons[25].innerText = '[';
+    buttons[26].innerText = ']';
+    buttons[38].innerText = ';';
+    buttons[39].innerText = '\'';
+    buttons[40].innerText = '\\';
+    buttons[50].innerText = ',';
+    buttons[51].innerText = '.';
+    buttons[52].innerText = '/';
+
+    if (capsLockButton.classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    }
+  }
+
+  if (args[0] === 'Shift' && args[1] === 'down' && keys === keysInRussian) {
+    buttons[1].innerText = '1';
+    buttons[2].innerText = '2';
+    buttons[3].innerText = '3';
+    buttons[4].innerText = '4';
+    buttons[5].innerText = '5';
+    buttons[6].innerText = '6';
+    buttons[7].innerText = '7';
+    buttons[8].innerText = '8';
+    buttons[9].innerText = '9';
+    buttons[10].innerText = '0';
+    buttons[11].innerText = '-';
+    buttons[12].innerText = '=';
+    buttons[40].innerText = '\\';
+    buttons[52].innerText = '.';
+
+    if (capsLockButton.classList.contains('active')) {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toUpperCase();
+        }
+      })
+    } else {
+      buttons.forEach((button, index) => {
+        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
+          button.innerText = button.innerText.toLowerCase();
+        }
+      })
+    }
+  }
+
+}
+
+fillButtonsInner();
+
+
+textarea.addEventListener('blur', () => textarea.focus());
 body.addEventListener('mousedown', buttonDownHandler);
 body.addEventListener('mouseup', buttonUpHandler);
 body.addEventListener('keydown', keyDownHandler);
@@ -47,137 +219,51 @@ function buttonDownHandler(event) {
   let elem = event.target;
   if (!elem.classList.contains('button')) return;
 
-  if (elem.classList.contains('CapsLock')) {
-    elem.classList.toggle('active');
-  } else {
-    elem.classList.add('active');
-  }
+  elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
 
   if (elem.classList.contains('Backspace')) {
-    if (input.selectionStart === 0) return;
-    input.setRangeText('', input.selectionStart - 1, input.selectionEnd, 'end');
+    if (textarea.selectionStart === 0) return;
+
+    textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
     return;
   }
 
   if (elem.classList.contains('Tab')) {
-    input.setRangeText('    ', input.selectionStart, input.selectionEnd, 'end');
+    textarea.setRangeText('    ', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
   if (elem.classList.contains('Delete')) {
-    input.setRangeText('', input.selectionStart, input.selectionEnd + 1, 'end');
+    textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
     return;
   }
 
   if (elem.classList.contains('CapsLock')) {
-    if (elem.classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      });
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      });
-    }
+    elem.classList.contains('active') ? fillButtonsInner('CapsLock', 'up') :
+    fillButtonsInner('CapsLock', 'down');
     return;
   }
 
   if (elem.classList.contains('Enter')) {
-    input.setRangeText('\n', input.selectionStart, input.selectionEnd, 'end');
+    textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
   if (elem.classList.contains('ShiftLeft')) {
-    buttons[0].innerText = '~';
-    buttons[1].innerText = '!';
-    buttons[2].innerText = '@';
-    buttons[3].innerText = '#';
-    buttons[4].innerText = '$';
-    buttons[5].innerText = '%';
-    buttons[6].innerText = '^';
-    buttons[7].innerText = '&';
-    buttons[8].innerText = '*';
-    buttons[9].innerText = '(';
-    buttons[10].innerText = ')';
-    buttons[11].innerText = '_';
-    buttons[12].innerText = '+';
-    buttons[25].innerText = '{';
-    buttons[26].innerText = '}';
-    buttons[38].innerText = ':';
-    buttons[39].innerText = '"';
-    buttons[40].innerText = '|';
-    buttons[50].innerText = '<';
-    buttons[51].innerText = '>';
-    buttons[52].innerText = '?';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    }
+    fillButtonsInner('Shift', 'up');
     return;
   }
 
   if (elem.classList.contains('ShiftRight')) {
-    buttons[0].innerText = '~';
-    buttons[1].innerText = '!';
-    buttons[2].innerText = '@';
-    buttons[3].innerText = '#';
-    buttons[4].innerText = '$';
-    buttons[5].innerText = '%';
-    buttons[6].innerText = '^';
-    buttons[7].innerText = '&';
-    buttons[8].innerText = '*';
-    buttons[9].innerText = '(';
-    buttons[10].innerText = ')';
-    buttons[11].innerText = '_';
-    buttons[12].innerText = '+';
-    buttons[25].innerText = '{';
-    buttons[26].innerText = '}';
-    buttons[38].innerText = ':';
-    buttons[39].innerText = '"';
-    buttons[40].innerText = '|';
-    buttons[50].innerText = '<';
-    buttons[51].innerText = '>';
-    buttons[52].innerText = '?';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    }
+    fillButtonsInner('Shift', 'up');
     return;
   }
 
   if (elem.classList.contains('ControlLeft')) {
     if (event.repeat == true) return;
-    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+    if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
@@ -188,49 +274,37 @@ function buttonDownHandler(event) {
 
   if (elem.classList.contains('AltLeft')) {
     if (event.repeat == true) return;
-    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+    if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
   if (elem.classList.contains('Space')) {
-    input.setRangeText(' ', input.selectionStart, input.selectionEnd, 'end');
+    textarea.setRangeText(' ', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
   if (elem.classList.contains('AltRight')) {
     if (event.repeat == true) return;
-    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+    if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
   if (elem.classList.contains('ControlRight')) {
     if (event.repeat == true) return;
-    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+    if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
-  input.setRangeText(elem.innerText, input.selectionStart, input.selectionEnd, 'end');
+  textarea.setRangeText(elem.innerText, textarea.selectionStart, textarea.selectionEnd, 'end');
 }
 
 function buttonUpHandler(event) {
@@ -245,41 +319,7 @@ function buttonUpHandler(event) {
   }
 
   if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
-    buttons[0].innerText = '`';
-    buttons[1].innerText = '1';
-    buttons[2].innerText = '2';
-    buttons[3].innerText = '3';
-    buttons[4].innerText = '4';
-    buttons[5].innerText = '5';
-    buttons[6].innerText = '6';
-    buttons[7].innerText = '7';
-    buttons[8].innerText = '8';
-    buttons[9].innerText = '9';
-    buttons[10].innerText = '0';
-    buttons[11].innerText = '-';
-    buttons[12].innerText = '=';
-    buttons[25].innerText = '[';
-    buttons[26].innerText = ']';
-    buttons[38].innerText = ';';
-    buttons[39].innerText = '\'';
-    buttons[40].innerText = '\\';
-    buttons[50].innerText = ',';
-    buttons[51].innerText = '.';
-    buttons[52].innerText = '/';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    }
+    fillButtonsInner('Shift', 'down');
     return;
   }
 }
@@ -290,139 +330,52 @@ function keyDownHandler(event) {
   let code = event.code;
   let elem = buttons.find(item => item.classList.contains(code));
 
-  if (elem && elem.classList.contains('CapsLock')) {
-    elem.classList.toggle('active');
-  } else if (elem) {
-    elem.classList.add('active');
-  } else {
+  if (!elem) return;
+
+  elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
+
+  if (code === 'Backspace') {
+    if (textarea.selectionStart === 0) return;
+    textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
     return;
   }
 
-  if (code == 'Backspace') {
-    if (input.selectionStart === 0) return;
-    input.setRangeText('', input.selectionStart - 1, input.selectionEnd, 'end');
+  if (code === 'Tab') {
+    textarea.setRangeText('    ', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
-  if (code == 'Tab') {
-    input.setRangeText('    ', input.selectionStart, input.selectionEnd, 'end');
+  if (code === 'Delete') {
+    textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
     return;
   }
 
-  if (code == 'Delete') {
-    input.setRangeText('', input.selectionStart, input.selectionEnd + 1, 'end');
+  if (code === 'CapsLock') {
+    elem.classList.contains('active') ? fillButtonsInner('CapsLock', 'up') :
+    fillButtonsInner('CapsLock', 'down');
     return;
   }
 
-  if (code == 'CapsLock') {
-    if (elem.classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      });
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      });
-    }
+  if (code === 'Enter') {
+    textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
-  if (code == 'Enter') {
-    input.setRangeText('\n', input.selectionStart, input.selectionEnd, 'end');
-    return;
-  }
-
-  if (code == 'ShiftLeft') {
-    buttons[0].innerText = '~';
-    buttons[1].innerText = '!';
-    buttons[2].innerText = '@';
-    buttons[3].innerText = '#';
-    buttons[4].innerText = '$';
-    buttons[5].innerText = '%';
-    buttons[6].innerText = '^';
-    buttons[7].innerText = '&';
-    buttons[8].innerText = '*';
-    buttons[9].innerText = '(';
-    buttons[10].innerText = ')';
-    buttons[11].innerText = '_';
-    buttons[12].innerText = '+';
-    buttons[25].innerText = '{';
-    buttons[26].innerText = '}';
-    buttons[38].innerText = ':';
-    buttons[39].innerText = '"';
-    buttons[40].innerText = '|';
-    buttons[50].innerText = '<';
-    buttons[51].innerText = '>';
-    buttons[52].innerText = '?';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    }
+  if (code === 'ShiftLeft') {
+    fillButtonsInner('Shift', 'up');
     return;
   }
 
   if (code == 'ShiftRight') {
-    buttons[0].innerText = '~';
-    buttons[1].innerText = '!';
-    buttons[2].innerText = '@';
-    buttons[3].innerText = '#';
-    buttons[4].innerText = '$';
-    buttons[5].innerText = '%';
-    buttons[6].innerText = '^';
-    buttons[7].innerText = '&';
-    buttons[8].innerText = '*';
-    buttons[9].innerText = '(';
-    buttons[10].innerText = ')';
-    buttons[11].innerText = '_';
-    buttons[12].innerText = '+';
-    buttons[25].innerText = '{';
-    buttons[26].innerText = '}';
-    buttons[38].innerText = ':';
-    buttons[39].innerText = '"';
-    buttons[40].innerText = '|';
-    buttons[50].innerText = '<';
-    buttons[51].innerText = '>';
-    buttons[52].innerText = '?';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    }
+    fillButtonsInner('Shift', 'up');
     return;
   }
 
   if (code == 'ControlLeft') {
     if (event.repeat == true) return;
-    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+    if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
@@ -433,95 +386,53 @@ function keyDownHandler(event) {
 
   if (code == 'AltLeft') {
     if (event.repeat == true) return;
-    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+    if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
   if (code == 'Space') {
-    input.setRangeText(' ', input.selectionStart, input.selectionEnd, 'end');
+    textarea.setRangeText(' ', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
   if (code == 'AltRight') {
     if (event.repeat == true) return;
-    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+    if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
   if (code == 'ControlRight') {
     if (event.repeat == true) return;
-    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+    if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
       keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
-      let i = 0;
-      for (let key in keys) {
-        buttons[i].innerText = keys[key];
-        i++;
-      }
+      fillButtonsInner();
     }
     return;
   }
 
-  input.setRangeText(elem.innerText, input.selectionStart, input.selectionEnd, 'end');
+  textarea.setRangeText(elem.innerText, textarea.selectionStart, textarea.selectionEnd, 'end');
 }
 
 function keyUpHandler(event) {
   let code = event.code;
   let elem = buttons.find(item => item.classList.contains(code));
 
-  if (elem && elem.classList.contains('CapsLock')) {
+  if (!elem) return;
+
+  if (elem?.classList.contains('CapsLock')) {
     return;
-  } else if (elem) elem.classList.remove('active');
+  } else {
+    elem?.classList.remove('active');
+  }
 
   if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
-    buttons[0].innerText = '`';
-    buttons[1].innerText = '1';
-    buttons[2].innerText = '2';
-    buttons[3].innerText = '3';
-    buttons[4].innerText = '4';
-    buttons[5].innerText = '5';
-    buttons[6].innerText = '6';
-    buttons[7].innerText = '7';
-    buttons[8].innerText = '8';
-    buttons[9].innerText = '9';
-    buttons[10].innerText = '0';
-    buttons[11].innerText = '-';
-    buttons[12].innerText = '=';
-    buttons[25].innerText = '[';
-    buttons[26].innerText = ']';
-    buttons[38].innerText = ';';
-    buttons[39].innerText = '\'';
-    buttons[40].innerText = '\\';
-    buttons[50].innerText = ',';
-    buttons[51].innerText = '.';
-    buttons[52].innerText = '/';
-
-    if (buttons[28].classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
-    } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
-    }
+    fillButtonsInner('Shift', 'down');
     return;
   }
 }

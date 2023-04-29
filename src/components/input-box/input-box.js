@@ -1,14 +1,14 @@
-function createInputBox() {
-  const INPUT = document.createElement('textarea');
+function createTextarea() {
+  const textarea = document.createElement('textarea');
 
-  INPUT.setAttribute('id', 'textarea');
-  INPUT.setAttribute('rows', '5');
-  INPUT.setAttribute('cols', '50');
-  INPUT.setAttribute('autofocus', true);
-  INPUT.setAttribute('value', '');
+  textarea.setAttribute('id', 'textarea');
+  textarea.setAttribute('rows', '5');
+  textarea.setAttribute('cols', '50');
+  textarea.setAttribute('autofocus', true);
+  textarea.setAttribute('value', '');
 
-  return INPUT;
+  return textarea;
 }
 
-let input = createInputBox();
-export { input };
+let textarea = createTextarea();
+export { textarea };
