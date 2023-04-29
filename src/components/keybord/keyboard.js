@@ -218,7 +218,11 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('Delete')) {
-    textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
+    if (textarea.selectionStart === textarea.selectionEnd) {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
+    } else {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+    }
     return;
   }
 
@@ -339,7 +343,11 @@ function keyDownHandler(event) {
   }
 
   if (code === 'Delete') {
-    textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
+    if (textarea.selectionStart === textarea.selectionEnd) {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
+    } else {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd, 'end');
+    }
     return;
   }
 
