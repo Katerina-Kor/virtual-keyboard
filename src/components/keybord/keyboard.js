@@ -14,6 +14,13 @@ const altRightButton = buttons[59];
 const controlLeftButton = buttons[55];
 const controlRightButton = buttons[60];
 let currentButton;
+const heading = createWrapper('h1', 'heading');
+const firstParagraph = createWrapper('p', 'text');
+const secondParagraph = createWrapper('p', 'text');
+
+heading.innerText = 'Virtual keyboard';
+firstParagraph.innerText = 'The keyboard was created in Windows OS';
+secondParagraph.innerText = 'Press Ctrl + Alt to switch language';
 
 function createKeyboard () {
 
@@ -440,4 +447,4 @@ function keyUpHandler(event) {
   }
 }
 
-export { keyboard };
+export { keyboard, heading, firstParagraph, secondParagraph };
