@@ -6,7 +6,16 @@ let keys;
 const rows = [];
 const buttons = [];
 const body = document.body;
-if (!keys) keys = keysInEnglish;
+let language = localStorage.getItem('keys');
+
+if (language === 'undefined' || language === 'english') {
+  keys = keysInEnglish;
+} else {
+  keys = keysInRussian;
+}
+console.log(keys);
+console.log(keys == keysInEnglish);
+console.log(keys == keysInRussian);
 const keyboard = createKeyboard();
 const capsLockButton = buttons[28];
 const altLeftButton = buttons[57];
@@ -198,6 +207,9 @@ body.addEventListener('mousedown', buttonDownHandler);
 body.addEventListener('mouseup', buttonUpHandler);
 body.addEventListener('keydown', keyDownHandler);
 body.addEventListener('keyup', keyUpHandler);
+window.addEventListener('unload', () => {
+  keys === keysInEnglish ? localStorage.setItem('keys', 'english') : localStorage.setItem('keys', 'russian')
+});
 
 function buttonDownHandler(event) {
   let elem = event.target;
