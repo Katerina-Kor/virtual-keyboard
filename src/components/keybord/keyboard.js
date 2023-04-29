@@ -121,17 +121,9 @@ function fillButtonsInner(...args) {
     buttons[52].innerText = ',';
 
     if (capsLockButton.classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'down');
     } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'up');
     }
   }
 
@@ -159,17 +151,9 @@ function fillButtonsInner(...args) {
     buttons[52].innerText = '/';
 
     if (capsLockButton.classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'up');
     } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'down');
     }
   }
 
@@ -190,17 +174,9 @@ function fillButtonsInner(...args) {
     buttons[52].innerText = '.';
 
     if (capsLockButton.classList.contains('active')) {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toUpperCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'up');
     } else {
-      buttons.forEach((button, index) => {
-        if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-          button.innerText = button.innerText.toLowerCase();
-        }
-      })
+      fillButtonsInner('CapsLock', 'down');
     }
   }
 
