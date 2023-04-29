@@ -1,4 +1,4 @@
-import { keysInEnglish } from "../../data/keys.js";
+import { keysInEnglish, keysInRussian } from "../../data/keys.js";
 import { createKeyButton } from "../button/button.js";
 import { input } from "../input-box/input-box.js";
 
@@ -170,17 +170,32 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('ControlLeft')) {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
   if (elem.classList.contains('MetaLeft')) {
-    //??
     return;
   }
 
   if (elem.classList.contains('AltLeft')) {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
@@ -190,12 +205,28 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('AltRight')) {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
   if (elem.classList.contains('ControlRight')) {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
@@ -384,17 +415,32 @@ function keyDownHandler(event) {
   }
 
   if (code == 'ControlLeft') {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
   if (code == 'MetaLeft') {
-    //??
     return;
   }
 
   if (code == 'AltLeft') {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
@@ -404,12 +450,28 @@ function keyDownHandler(event) {
   }
 
   if (code == 'AltRight') {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[55].classList.contains('active') || buttons[60].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
   if (code == 'ControlRight') {
-    //??
+    if (event.repeat == true) return;
+    if (buttons[57].classList.contains('active') || buttons[59].classList.contains('active')) {
+      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      let i = 0;
+      for (let key in keys) {
+        buttons[i].innerText = keys[key];
+        i++;
+      }
+    }
     return;
   }
 
