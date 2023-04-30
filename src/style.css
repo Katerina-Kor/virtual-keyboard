@@ -111,7 +111,6 @@
 }
 
 .active {
-  border-style: inset;
   color: rgb(170, 156, 214);
   box-shadow: none;
 }
