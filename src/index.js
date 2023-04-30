@@ -1,5 +1,7 @@
-import { textarea } from './components/input-box/input-box.js';
-import { keyboard, heading, firstParagraph, secondParagraph } from './components/keybord/keyboard.js';
+import { textarea } from './components/components-creation/components-creation.js';
+import {
+  keyboard, heading, firstParagraph, secondParagraph,
+} from './components/keyboard/keyboard.js';
 
 document.body.append(heading);
 document.body.append(textarea);

@@ -63,9 +63,7 @@ const keysInEnglish = {
   ArrowDown: '▼',
   ArrowRight: '►',
   ControlRight: 'Ctrl',
-}
-
-
+};
 
 const keysInRussian = {
   Backquote: 'ё',
@@ -132,6 +130,6 @@ const keysInRussian = {
   ArrowDown: '▼',
   ArrowRight: '►',
   ControlRight: 'Ctrl',
-}
+};
 
 export { keysInEnglish, keysInRussian };

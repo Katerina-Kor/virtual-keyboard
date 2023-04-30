@@ -1,22 +1,9 @@
-import { keysInEnglish, keysInRussian } from "../../data/keys.js";
-import { createKeyButton } from "../button/button.js";
-import { textarea } from "../input-box/input-box.js";
+import { keysInEnglish, keysInRussian } from '../../data/keys.js';
+import { textarea, createWrapper } from '../components-creation/components-creation.js';
+import { buttons, keyboard, exportKeys } from './keyboard-creation.js';
 
-let keys;
-const rows = [];
-const buttons = [];
-const body = document.body;
-let language = localStorage.getItem('keys');
-
-if (language === 'undefined' || language === 'english') {
-  keys = keysInEnglish;
-} else {
-  keys = keysInRussian;
-}
-console.log(keys);
-console.log(keys == keysInEnglish);
-console.log(keys == keysInRussian);
-const keyboard = createKeyboard();
+const { body } = document;
+let keys = exportKeys;
 const capsLockButton = buttons[28];
 const altLeftButton = buttons[57];
 const altRightButton = buttons[59];
@@ -31,45 +18,14 @@ heading.innerText = 'Virtual keyboard';
 firstParagraph.innerText = 'The keyboard was created in Windows OS';
 secondParagraph.innerText = 'Press Ctrl + Alt to switch language';
 
-function createKeyboard () {
-
-  let keyboard = createWrapper('div', 'keyboard');
-
-  for (let i = 0; i < 5; i++) {
-    const row = createWrapper('div', 'keyboard__row');
-    rows.push(row);
-    keyboard.append(row);
-  }
-
-  for (let key in keys) {
-    let button = createKeyButton(key);
-    buttons.push(button);
-  }
-
-  for (let i = 0; i < buttons.length; i++) {
-    if (i < 14) rows[0].append(buttons[i]);
-    if (i > 13 && i < 28) rows[1].append(buttons[i]);
-    if (i > 27 && i < 42) rows[2].append(buttons[i]);
-    if (i > 41 && i < 55) rows[3].append(buttons[i]);
-    if (i > 54) rows[4].append(buttons[i]);
-  }
-
-  return keyboard;
-}
-
-function createWrapper(tagName, className) {
-  const wrapper = document.createElement(tagName);
-  wrapper.classList.add(className);
-  return wrapper;
-}
-
 function fillButtonsInner(...args) {
   if (args.length === 0) {
     let i = 0;
-    for (let key in keys) {
+    Object.keys(keys).forEach((key) => {
       buttons[i].innerText = keys[key];
-      i++;
-    }
+      i += 1;
+    });
+
     if (capsLockButton.classList.contains('active')) {
       fillButtonsInner('CapsLock', 'up');
     }
@@ -77,16 +33,20 @@ function fillButtonsInner(...args) {
 
   if (args[0] === 'CapsLock' && args[1] === 'up') {
     buttons.forEach((button, index) => {
-      if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-        button.innerText = button.innerText.toUpperCase();
+      if (index === 0 || (index >= 15 && index <= 26)
+        || (index >= 29 && index <= 39) || (index >= 43 && index <= 51)) {
+        const thisButton = button;
+        thisButton.innerText = button.innerText.toUpperCase();
       }
     });
   }
 
   if (args[0] === 'CapsLock' && args[1] === 'down') {
     buttons.forEach((button, index) => {
-      if (index == 0 || index >= 15 && index <= 26 || index >= 29 && index <= 39 || index >= 43 && index <= 51) {
-        button.innerText = button.innerText.toLowerCase();
+      if (index === 0 || (index >= 15 && index <= 26)
+        || (index >= 29 && index <= 39) || (index >= 43 && index <= 51)) {
+        const thisButton = button;
+        thisButton.innerText = button.innerText.toLowerCase();
       }
     });
   }
@@ -196,27 +156,20 @@ function fillButtonsInner(...args) {
       fillButtonsInner('CapsLock', 'down');
     }
   }
-
 }
 
 fillButtonsInner();
 
-
-textarea.addEventListener('blur', () => textarea.focus());
-body.addEventListener('mousedown', buttonDownHandler);
-body.addEventListener('mouseup', buttonUpHandler);
-body.addEventListener('keydown', keyDownHandler);
-body.addEventListener('keyup', keyUpHandler);
-window.addEventListener('unload', () => {
-  keys === keysInEnglish ? localStorage.setItem('keys', 'english') : localStorage.setItem('keys', 'russian')
-});
-
 function buttonDownHandler(event) {
-  let elem = event.target;
+  const elem = event.target;
   currentButton = elem;
   if (!elem.classList.contains('button')) return;
 
-  elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
+  if (elem.classList.contains('CapsLock')) {
+    elem.classList.toggle('active');
+  } else {
+    elem.classList.add('active');
+  }
 
   if (elem.classList.contains('Backspace')) {
     if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) return;
@@ -248,8 +201,11 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('CapsLock')) {
-    elem.classList.contains('active') ? fillButtonsInner('CapsLock', 'up') :
-    fillButtonsInner('CapsLock', 'down');
+    if (elem.classList.contains('active')) {
+      fillButtonsInner('CapsLock', 'up');
+    } else {
+      fillButtonsInner('CapsLock', 'down');
+    }
     return;
   }
 
@@ -269,9 +225,13 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('ControlLeft')) {
-    if (event.repeat == true) return;
+    if (event.repeat === true) return;
     if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
@@ -282,9 +242,13 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('AltLeft')) {
-    if (event.repeat == true) return;
+    if (event.repeat === true) return;
     if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
@@ -296,18 +260,26 @@ function buttonDownHandler(event) {
   }
 
   if (elem.classList.contains('AltRight')) {
-    if (event.repeat == true) return;
+    if (event.repeat === true) return;
     if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
   }
 
   if (elem.classList.contains('ControlRight')) {
-    if (event.repeat == true) return;
+    if (event.repeat === true) return;
     if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
@@ -317,31 +289,33 @@ function buttonDownHandler(event) {
 }
 
 function buttonUpHandler() {
-  let elem = currentButton;
+  const elem = currentButton;
 
   if (!elem.classList.contains('button')) return;
 
   if (elem.classList.contains('CapsLock')) {
     return;
-  } else {
-    elem.classList.remove('active');
   }
+  elem.classList.remove('active');
 
   if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
     fillButtonsInner('Shift', 'down');
-    return;
   }
 }
 
 function keyDownHandler(event) {
   event.preventDefault();
 
-  let code = event.code;
-  let elem = buttons.find(item => item.classList.contains(code));
+  const { code } = event;
+  const elem = buttons.find((item) => item.classList.contains(code));
 
   if (!elem) return;
 
-  elem.classList.contains('CapsLock') ? elem.classList.toggle('active') : elem.classList.add('active');
+  if (elem.classList.contains('CapsLock')) {
+    elem.classList.toggle('active');
+  } else {
+    elem.classList.add('active');
+  }
 
   if (code === 'Backspace') {
     if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) return;
@@ -373,8 +347,11 @@ function keyDownHandler(event) {
   }
 
   if (code === 'CapsLock') {
-    elem.classList.contains('active') ? fillButtonsInner('CapsLock', 'up') :
-    fillButtonsInner('CapsLock', 'down');
+    if (elem.classList.contains('active')) {
+      fillButtonsInner('CapsLock', 'up');
+    } else {
+      fillButtonsInner('CapsLock', 'down');
+    }
     return;
   }
 
@@ -388,51 +365,67 @@ function keyDownHandler(event) {
     return;
   }
 
-  if (code == 'ShiftRight') {
+  if (code === 'ShiftRight') {
     fillButtonsInner('Shift', 'up');
     return;
   }
 
-  if (code == 'ControlLeft') {
-    if (event.repeat == true) return;
+  if (code === 'ControlLeft') {
+    if (event.repeat === true) return;
     if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
   }
 
-  if (code == 'MetaLeft') {
+  if (code === 'MetaLeft') {
     return;
   }
 
-  if (code == 'AltLeft') {
-    if (event.repeat == true) return;
+  if (code === 'AltLeft') {
+    if (event.repeat === true) return;
     if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
   }
 
-  if (code == 'Space') {
+  if (code === 'Space') {
     textarea.setRangeText(' ', textarea.selectionStart, textarea.selectionEnd, 'end');
     return;
   }
 
-  if (code == 'AltRight') {
-    if (event.repeat == true) return;
+  if (code === 'AltRight') {
+    if (event.repeat === true) return;
     if (controlLeftButton.classList.contains('active') || controlRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
   }
 
-  if (code == 'ControlRight') {
-    if (event.repeat == true) return;
+  if (code === 'ControlRight') {
+    if (event.repeat === true) return;
     if (altLeftButton.classList.contains('active') || altRightButton.classList.contains('active')) {
-      keys === keysInEnglish ? keys = keysInRussian : keys = keysInEnglish;
+      if (keys === keysInEnglish) {
+        keys = keysInRussian;
+      } else {
+        keys = keysInEnglish;
+      }
       fillButtonsInner();
     }
     return;
@@ -442,21 +435,34 @@ function keyDownHandler(event) {
 }
 
 function keyUpHandler(event) {
-  let code = event.code;
-  let elem = buttons.find(item => item.classList.contains(code));
+  const { code } = event;
+  const elem = buttons.find((item) => item.classList.contains(code));
 
   if (!elem) return;
 
   if (elem?.classList.contains('CapsLock')) {
     return;
-  } else {
-    elem?.classList.remove('active');
   }
+  elem?.classList.remove('active');
 
   if (elem.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight')) {
     fillButtonsInner('Shift', 'down');
-    return;
   }
 }
 
-export { keyboard, heading, firstParagraph, secondParagraph };
+textarea.addEventListener('blur', () => textarea.focus());
+body.addEventListener('mousedown', buttonDownHandler);
+body.addEventListener('mouseup', buttonUpHandler);
+body.addEventListener('keydown', keyDownHandler);
+body.addEventListener('keyup', keyUpHandler);
+window.addEventListener('unload', () => {
+  if (keys === keysInEnglish) {
+    localStorage.setItem('keys', 'english');
+  } else {
+    localStorage.setItem('keys', 'russian');
+  }
+});
+
+export {
+  keyboard, heading, firstParagraph, secondParagraph,
+};
