@@ -1,0 +1,116 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  min-height: 100vh;
+  margin: 0;
+  background-color: rgb(147, 155, 183);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#textarea {
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 700px;
+  margin: 0 auto;
+  padding: 5px;
+  display: block;
+  height: 30vh;
+  max-height: 40vh;
+  background-color: rgb(113, 134, 168);
+  background-color: rgb(135, 142, 177);
+}
+
+.heading {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.text {
+  margin: 0 auto;
+}
+
+.keyboard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 auto;
+  width: fit-content;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgb(36, 34, 31);
+  box-shadow: 5px 5px 5px black;
+}
+
+.keyboard__row {
+  display: flex;
+  column-gap: 5px;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(52, 49, 45);
+  color: rgb(219, 209, 209);
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px black;
+}
+
+.Backspace,
+.ShiftLeft {
+  width: 80px;
+}
+
+.Tab {
+  width: 50px;
+}
+
+.Delete {
+  width: 70px;
+}
+
+.CapsLock {
+  width: 55px;
+}
+
+.Enter {
+  width: 65px;
+}
+
+.ShiftRight {
+  width: 85px;
+}
+
+.Space {
+  width: 305px;
+}
+
+.ControlLeft,
+.ControlRight,
+.AltLeft,
+.AltRight,
+.ArrowUp,
+.ArrowDown,
+.ArrowLeft,
+.ArrowRight,
+.MetaLeft,
+.Space,
+.ShiftLeft,
+.ShiftRight,
+.CapsLock,
+.Delete,
+.Backspace,
+.Enter,
+.Tab {
+  background-color: rgb(37, 37, 87);
+}
+
+.active {
+  color: rgb(170, 156, 214);
+  box-shadow: none;
+}
